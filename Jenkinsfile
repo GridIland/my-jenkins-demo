@@ -8,7 +8,7 @@ pipeline {
 
   environment {
     APP_NAME = "demo-app"
-    BRANCH_NAME = "${env.GIT_BRANCH.replace('origin/', '')}"
+    BRANCH_NAME = env.BRANCH_NAME.replaceAll('/', '-')
     // Configurer dans Jenkins > System Configuration
     TEAM_EMAIL = 'kousssougboss@gmail.com'
   }
@@ -18,7 +18,7 @@ pipeline {
     stage('Checkout & Setup') {
       agent {
         dockerContainer {
-          image 'node:18-alpine'
+          image 'icontain/jenkins-node-agent'
         }
       }
       steps {
@@ -33,7 +33,7 @@ pipeline {
         stage('Linting') {
           agent {
             dockerContainer {
-              image 'node:18-alpine'
+              image 'icontain/jenkins-node-agent'
             }
           }
           steps {
@@ -50,7 +50,7 @@ pipeline {
         stage('Unit Tests') {
           agent {
             dockerContainer {
-              image 'node:18-alpine'
+              image 'icontain/jenkins-node-agent'
             }
           }
           steps {
