@@ -10,7 +10,7 @@ pipeline {
     APP_NAME = "demo-app"
     BRANCH_NAME = "${env.GIT_BRANCH.replace('origin/', '')}"
     // Configurer dans Jenkins > System Configuration
-    TEAM_EMAIL = 'kousssougboss@gmail.com, dev-team@example.com'
+    TEAM_EMAIL = 'kousssougboss@gmail.com'
   }
 
   stages {
