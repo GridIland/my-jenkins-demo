@@ -16,7 +16,11 @@ pipeline {
   stages {
     // Étape 1: Préparation
     stage('Checkout & Setup') {
-      agent { docker 'node:18-alpine' }
+      agent {
+        dockerContainer {
+          image 'node:18-alpine'
+        }
+      }
       steps {
         checkout scm
         sh 'npm install'
@@ -27,7 +31,11 @@ pipeline {
     stage('Lint & Test') {
       parallel {
         stage('Linting') {
-          agent { docker 'node:18-alpine' }
+          agent {
+            dockerContainer {
+              image 'node:18-alpine'
+            }
+          }
           steps {
             sh 'npm run lint'
           }
@@ -40,7 +48,11 @@ pipeline {
           }
         }
         stage('Unit Tests') {
-          agent { docker 'node:18-alpine' }
+          agent {
+            dockerContainer {
+              image 'node:18-alpine'
+            }
+          }
           steps {
             sh 'npm test'
           }
