@@ -17,7 +17,7 @@ pipeline {
     // Étape 1: Préparation
     stage('Checkout & Setup') {
       agent {
-        dockerContainer {
+        docker {
           image 'icontain/jenkins-node-agent'
         }
       }
@@ -32,7 +32,7 @@ pipeline {
       parallel {
         stage('Linting') {
           agent {
-            dockerContainer {
+            docker {
               image 'icontain/jenkins-node-agent'
               args '-u root'
             }
@@ -50,7 +50,7 @@ pipeline {
         }
         stage('Unit Tests') {
           agent {
-            dockerContainer {
+            docker {
               image 'icontain/jenkins-node-agent'
               args '-u root'
             }
@@ -73,7 +73,7 @@ pipeline {
     stage('Build Image') {
       when { branch 'develop' }
       agent {
-        dockerContainer {
+        docker {
           image 'docker:24-cli'
           args '-u root'
         }
