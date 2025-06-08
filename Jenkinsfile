@@ -33,14 +33,19 @@ pipeline {
           agent {
             dockerContainer {
               image 'icontain/jenkins-node-agent:latest'
+              args '--user root'
             }
           }
           steps {
             checkout scm
             sh 'npm install'
-            // Utiliser npx qui gère automatiquement les permissions
-            sh 'npx eslint . --fix-dry-run || true'
-            sh 'npx eslint .'
+            // Installer ESLint globalement si nécessaire
+            sh 'npm install -g eslint || true'
+            // Debug: vérifier les permissions
+            sh 'ls -la node_modules/.bin/eslint || echo "eslint binary not found"'
+            sh 'chmod +x node_modules/.bin/* || true'
+            // Essayer plusieurs approches
+            sh 'npx eslint . || ./node_modules/.bin/eslint . || npm run lint'
           }
           post {
             failure {
