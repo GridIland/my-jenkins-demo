@@ -18,7 +18,7 @@ pipeline {
     stage('Checkout & Setup') {
       agent {
         docker {
-          image 'icontain/jenkins-node-agent'
+          image 'node:18-alpine'
           
         }
       }
@@ -34,7 +34,7 @@ pipeline {
         stage('Linting') {
           agent {
             docker {
-              image 'icontain/jenkins-node-agent'
+              image 'node:18-alpine'
               
               
             }
@@ -53,8 +53,7 @@ pipeline {
         stage('Unit Tests') {
           agent {
             docker {
-              image 'icontain/jenkins-node-agent'
-              
+              image 'node:18-alpine'
             }
           }
           steps {
