@@ -17,9 +17,8 @@ pipeline {
     // Étape 1: Préparation
     stage('Checkout & Setup') {
       agent {
-        docker {
+        dockerContainer {
           image 'node:18-alpine'
-          
         }
       }
       steps {
@@ -33,10 +32,8 @@ pipeline {
       parallel {
         stage('Linting') {
           agent {
-            docker {
+            dockerContainer {
               image 'node:18-alpine'
-              
-              
             }
           }
           steps {
@@ -52,7 +49,7 @@ pipeline {
         }
         stage('Unit Tests') {
           agent {
-            docker {
+            dockerContainer {
               image 'node:18-alpine'
             }
           }
@@ -70,7 +67,7 @@ pipeline {
       }
     }
 
-    // Étape 3: Build Docker
+    // Étape 3: Build docker
     stage('Build Image') {
       when { branch 'develop' }
       agent {
