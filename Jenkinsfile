@@ -9,7 +9,6 @@ pipeline {
   environment {
     APP_NAME = "demo-app"
     BRANCH_NAME = env.BRANCH_NAME.replaceAll('/', '-')
-    // Configurer dans Jenkins > System Configuration
     TEAM_EMAIL = 'koussougboss@gmail.com, huguesblakime@gmail.com'
   }
 
@@ -37,7 +36,11 @@ pipeline {
             }
           }
           steps {
-            sh 'npm run lint'
+            checkout scm
+            sh 'npm install'
+            // Utiliser npx qui gère automatiquement les permissions
+            sh 'npx eslint . --fix-dry-run || true'
+            sh 'npx eslint .'
           }
           post {
             failure {
@@ -54,7 +57,11 @@ pipeline {
             }
           }
           steps {
-            sh 'npm test'
+            checkout scm
+            sh 'npm install'
+            // Utiliser npx pour les tests aussi pour éviter les problèmes de permissions
+            sh 'npx jest --version || echo "Jest not found, using npm test"'
+            sh 'npm test || npx jest'
           }
           post {
             failure {
@@ -73,7 +80,6 @@ pipeline {
       agent {
         docker {
           image 'docker:24-cli'
-          
         }
       }
       steps {
