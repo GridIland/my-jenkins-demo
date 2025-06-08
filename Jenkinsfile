@@ -17,8 +17,9 @@ pipeline {
     // Étape 1: Préparation
     stage('Checkout & Setup') {
       agent {
-        dockerContainer {
+        docker {
           image 'icontain/jenkins-node-agent'
+          args '-u root' // Exécuter en tant que root pour éviter les problèmes de permissions
         }
       }
       steps {
@@ -32,8 +33,9 @@ pipeline {
       parallel {
         stage('Linting') {
           agent {
-            dockerContainer {
+            docker {
               image 'icontain/jenkins-node-agent'
+              args '-u root' // Exécuter en tant que root pour éviter les problèmes de permissions
               
             }
           }
@@ -50,9 +52,9 @@ pipeline {
         }
         stage('Unit Tests') {
           agent {
-            dockerContainer {
+            docker {
               image 'icontain/jenkins-node-agent'
-              
+              args '-u root' // Exécuter en tant que root pour éviter les problèmes de permissions
             }
           }
           steps {
@@ -73,9 +75,9 @@ pipeline {
     stage('Build Image') {
       when { branch 'develop' }
       agent {
-        dockerContainer {
+        docker {
           image 'docker:24-cli'
-          
+          args '-u root' // Exécuter en tant que root pour éviter les problèmes de permissions
         }
       }
       steps {
