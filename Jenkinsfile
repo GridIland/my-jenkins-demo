@@ -19,7 +19,7 @@ pipeline {
       agent {
         docker {
           image 'icontain/jenkins-node-agent'
-          args '-u root' // Exécuter en tant que root pour éviter les problèmes de permissions
+          
         }
       }
       steps {
@@ -35,7 +35,7 @@ pipeline {
           agent {
             docker {
               image 'icontain/jenkins-node-agent'
-              args '-u root' // Exécuter en tant que root pour éviter les problèmes de permissions
+              
               
             }
           }
@@ -54,7 +54,7 @@ pipeline {
           agent {
             docker {
               image 'icontain/jenkins-node-agent'
-              args '-u root' // Exécuter en tant que root pour éviter les problèmes de permissions
+              
             }
           }
           steps {
@@ -77,7 +77,7 @@ pipeline {
       agent {
         docker {
           image 'docker:24-cli'
-          args '-u root' // Exécuter en tant que root pour éviter les problèmes de permissions
+          
         }
       }
       steps {
