@@ -33,7 +33,6 @@ pipeline {
           agent {
             dockerContainer {
               image 'icontain/jenkins-node-agent:latest'
-              args '--user root'
             }
           }
           steps {
