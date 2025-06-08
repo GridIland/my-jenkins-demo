@@ -34,6 +34,7 @@ pipeline {
           agent {
             dockerContainer {
               image 'icontain/jenkins-node-agent'
+              args '-u root'
             }
           }
           steps {
@@ -51,10 +52,11 @@ pipeline {
           agent {
             dockerContainer {
               image 'icontain/jenkins-node-agent'
+              args '-u root'
             }
           }
           steps {
-            sh 'sudo npm test'
+            sh 'sudo npm test --unsafe-perm'
           }
           post {
             failure {
@@ -73,6 +75,7 @@ pipeline {
       agent {
         dockerContainer {
           image 'docker:24-cli'
+          args '-u root'
         }
       }
       steps {
