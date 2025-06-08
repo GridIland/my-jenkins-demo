@@ -121,21 +121,13 @@ pipeline {
     }
     success {
       echo "👉 SUCCÈS: ${env.BUILD_URL}"
-      emailext body: "Build réussi!\n\nDétails: ${env.BUILD_URL}",
-              subject: "SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-              to: "${TEAM_EMAIL}"
     }
     failure {
       echo "❌ ÉCHEC: Veuillez vérifier les logs"
-      emailext body: "Échec du pipeline!\n\nConsulter les logs: ${env.BUILD_URL}",
-              subject: "FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-              to: "${TEAM_EMAIL}"
+      
     }
     unstable {
       echo "⚠️ Des tests sont instables"
-      emailext body: "Pipeline instable (tests échoués)\n\nDétails: ${env.BUILD_URL}",
-              subject: "UNSTABLE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-              to: "${TEAM_EMAIL}"
     }
   }
 }
