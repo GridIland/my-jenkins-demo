@@ -70,7 +70,11 @@ pipeline {
     // Étape 3: Build Docker
     stage('Build Image') {
       when { branch 'develop' }
-      agent { docker 'docker:24-cli' }
+      agent {
+        dockerContainer {
+          image 'docker:24-cli'
+        }
+      }
       steps {
         sh 'docker build -t ${APP_NAME}:${BRANCH_NAME}-${BUILD_NUMBER} .'
       }
