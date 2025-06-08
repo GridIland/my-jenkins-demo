@@ -18,7 +18,7 @@ pipeline {
     stage('Checkout & Setup') {
       agent {
         dockerContainer {
-          image 'node:18-alpine'
+          image 'icontain/jenkins-node-agent:latest'
         }
       }
       steps {
@@ -33,7 +33,7 @@ pipeline {
         stage('Linting') {
           agent {
             dockerContainer {
-              image 'node:18-alpine'
+              image 'icontain/jenkins-node-agent:latest'
             }
           }
           steps {
@@ -50,11 +50,11 @@ pipeline {
         stage('Unit Tests') {
           agent {
             dockerContainer {
-              image 'node:18-alpine'
+              image 'icontain/jenkins-node-agent:latest'
             }
           }
           steps {
-            sh 'npm test --unsafe-perm'
+            sh 'npm test'
           }
           post {
             failure {
