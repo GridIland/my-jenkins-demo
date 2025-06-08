@@ -17,7 +17,7 @@ pipeline {
     // Étape 1: Préparation
     stage('Checkout & Setup') {
       agent {
-        docker {
+        dockerContainer {
           image 'icontain/jenkins-node-agent'
         }
       }
@@ -32,9 +32,9 @@ pipeline {
       parallel {
         stage('Linting') {
           agent {
-            docker {
+            dockerContainer {
               image 'icontain/jenkins-node-agent'
-              args '-u root'
+              
             }
           }
           steps {
@@ -50,13 +50,13 @@ pipeline {
         }
         stage('Unit Tests') {
           agent {
-            docker {
+            dockerContainer {
               image 'icontain/jenkins-node-agent'
-              args '-u root'
+              
             }
           }
           steps {
-            sh 'sudo npm test --unsafe-perm'
+            sh 'npm test --unsafe-perm'
           }
           post {
             failure {
@@ -73,9 +73,9 @@ pipeline {
     stage('Build Image') {
       when { branch 'develop' }
       agent {
-        docker {
+        dockerContainer {
           image 'docker:24-cli'
-          args '-u root'
+          
         }
       }
       steps {
