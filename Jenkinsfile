@@ -18,9 +18,6 @@ pipeline {
   stages {
     // Étape 1: Préparation et installation
     stage('Checkout & Setup') {
-      options {
-        reuseNode true
-      }
       steps {
         checkout scm
         sh '''
@@ -33,9 +30,6 @@ pipeline {
 
     // Étape 2: Qualité de code (séquentiel pour éviter les conflits)
     stage('Code Quality') {
-      options {
-        reuseNode true
-      }
       steps {
         sh '''
           echo "🔍 Exécution du linting..."
@@ -59,9 +53,6 @@ pipeline {
     // Étape 3: Build Docker (uniquement pour develop)
     stage('Build Docker Image') {
       when { branch 'develop' }
-      options {
-        reuseNode true
-      }
       steps {
         sh '''
           echo "🐳 Construction de l'image Docker..."
@@ -96,9 +87,6 @@ pipeline {
     // Étape 4: Déploiement Staging (simulé)
     stage('Deploy to Staging') {
       when { branch 'develop' }
-      options {
-        reuseNode true
-      }
       steps {
         sh '''
           echo "🚀 Déploiement simulé sur l'environnement de staging"
@@ -116,9 +104,6 @@ pipeline {
     // Étape 5: Validation manuelle pour la production
     stage('Production Approval') {
       when { branch 'develop' }
-      options {
-        reuseNode true
-      }
       steps {
         script {
           def userInput = input(
@@ -143,9 +128,6 @@ pipeline {
           branch 'main'
           branch 'develop'  // Après approbation
         }
-      }
-      options {
-        reuseNode true
       }
       steps {
         sh '''
