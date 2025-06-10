@@ -1,6 +1,6 @@
 pipeline {
   agent { 
-    label 'nodejs docker-agent'
+    label 'nodejs-agent'
   }
   
   options {
